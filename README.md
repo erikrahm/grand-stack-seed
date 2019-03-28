@@ -24,7 +24,7 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
 
     `GRAPHQL_URI *example: http://localhost:8000/graphql*`
 
-2. Install dependencies for both server and client by running `npm (or yarn) run install` in the root of the project.
+2. Install dependencies for both server and client by running `npm (or yarn) run install-all` in the root of the project.
 3. Start up both servers by running `npm start` in the root of the project`
 
 ## Project configuration
