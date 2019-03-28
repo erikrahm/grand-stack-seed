@@ -1,0 +1,16 @@
+{
+  "name": "grand-stack-seed",
+  "version": "1.0.0",
+  "description": "Seed project for building GRAND Stack applications.",
+  "scripts": {
+    "start": "concurrently \"cd server && npm start\" \"cd client && npm start\"",
+    "install": "concurrently \"cd server && npm install\" \"cd client && npm install\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}

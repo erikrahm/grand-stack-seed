@@ -1,0 +1,54 @@
+{
+  "name": "grand-client",
+  "version": "0.1.0",
+  "description": "Typescript Create React App with Apollo Client and JSS with built in Auth.",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "24.0.11",
+    "@types/node": "11.11.6",
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "16.8.3",
+    "@types/react-jss": "^8.6.3",
+    "@types/react-router-dom": "^4.3.1",
+    "apollo-boost": "^0.3.1",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link": "^1.2.11",
+    "apollo-link-http": "^1.5.14",
+    "formik": "^1.5.1",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "jss": "^9.8.7",
+    "jss-camel-case": "^6.1.0",
+    "jss-compose": "^5.0.0",
+    "jss-default-unit": "^8.0.2",
+    "jss-expand": "^5.3.0",
+    "jss-nested": "^6.0.1",
+    "jss-props-sort": "^6.0.0",
+    "jss-vendor-prefixer": "^8.0.1",
+    "jwt-decode": "^2.2.0",
+    "react": "^16.8.5",
+    "react-apollo": "^2.5.2",
+    "react-dom": "^16.8.5",
+    "react-jss": "^8.6.1",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.8",
+    "typescript": "3.3.4000",
+    "yup": "^0.27.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
