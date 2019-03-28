@@ -13,7 +13,8 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
     NEO4J_PASSWORD *example: password*
     GRAPHQL_LISTEN_PORT *example: 8000*
     GRAPHQL_URI *example: http://localhost:8000*
-    JWT_SECRET *example: generated secret*```
+    JWT_SECRET *example: generated secret*
+    ```
  
  2. Create a `.env.local` file in your `./client` directory with the following env variables:
 
