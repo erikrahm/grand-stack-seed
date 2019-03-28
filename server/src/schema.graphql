@@ -13,7 +13,7 @@ type LoginInfo {
 }
 
 type Query {
-  me(id: ID): User
+  me(user: ID): User @cypher(statement: "MATCH (u:User {id: $user}) RETURN u")
   users: [User!] @cypher(statement: "MATCH (u:User) RETURN u")
   user(id: ID!): User
     @cypher(statement: "MATCH (u:User) WHERE u.id = $id RETURN u")

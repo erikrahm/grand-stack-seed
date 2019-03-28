@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { ApolloClient } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
@@ -10,7 +10,7 @@ import injectSheet from "react-jss";
 import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
-import { colors } from "../utils/colors";
+import { colors } from "./constants/colors";
 
 const styles = {
   appContainer: {
@@ -19,7 +19,9 @@ const styles = {
     minHeight: "100vh",
     display: "flex",
     verticalAlign: "middle",
-    alignItems: "center"
+    alignItems: "center",
+    overflowX: "hidden",
+    maxWidth: "100%"
   }
 };
 
