@@ -8,7 +8,7 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
 
  1. Create `.env` file in your `./server` directory with the following env variables
 
-    `NEO4J_URI *example: bolt://localhost:8687*`
+    `NEO4J_URI *example: bolt://localhost:8687*` (this can be a local instance of neo4j or a neo4j sandbox URI)
     
     `NEO4J_USER *example: neo4j*`
     
@@ -16,7 +16,7 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
     
     `GRAPHQL_LISTEN_PORT *example: 8000*`
     
-    `GRAPHQL_URI *example: http://localhost:8000*`
+    `GRAPHQL_URI *example: http://localhost:8000*` (Graphiql will be available at this URI + `/graphql`)
     
     `JWT_SECRET *example: generated secret*`
  
