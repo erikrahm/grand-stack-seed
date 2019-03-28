@@ -8,7 +8,8 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
 
  1. Create `.env` file in your `./server` directory with the following env variables
 
-    ```NEO4J_URI *example: bolt://localhost:8687*
+    ```
+NEO4J_URI *example: bolt://localhost:8687*
     NEO4J_USER *example: neo4j*
     NEO4J_PASSWORD *example: password*
     GRAPHQL_LISTEN_PORT *example: 8000*
