@@ -20,7 +20,7 @@ const injectUser = async req => {
     const { user } = await jwt.verify(token, SECRET);
     req.user = user;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   req.next();
 };
@@ -53,5 +53,5 @@ const server = new ApolloServer({
 server.applyMiddleware({ app, path: "/graphql" });
 
 app.listen({ port: process.env.GRAPHQL_LISTEN_PORT }, () => {
-  console.log(`Apollo Server live at ${process.env.GRAPHQL_URI}`);
+  console.log(`🚀 Server live at ${process.env.GRAPHQL_URI} 🚀`);
 });

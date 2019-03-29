@@ -2,7 +2,6 @@ declare const NO_DEFAULT_VALUE: undefined;
 declare const __DEV__: boolean;
 declare const __PROD__: boolean;
 declare const devToolsExtension: boolean;
-declare const LAUNCH_DARKLY_OVERRIDES_INJECTED: { [key: string]: boolean };
 
 declare type WithStyle<T> = { [P in keyof T]: string };
 

@@ -44,7 +44,11 @@ const REGISTER = gql`
   }
 `;
 
-const Register = ({ classes }: any) => {
+type Props = {
+  classes: WithStyle<typeof styles>;
+};
+
+const Register: React.FC<Props> = ({ classes }) => {
   return (
     <div className={classes.loginContainer}>
       <h1 className={classes.header}>Register</h1>

@@ -10,20 +10,22 @@ export const resolvers = {
       user.password = await bcrypt.hash(user.password, 12);
       return neo4jgraphql(object, user, ctx, resolveInfo, true);
     },
-    Login: async (object, { email, password, token }, ctx, resolveInfo) => {
+    Login: async (object, { email, password }, ctx, resolveInfo) => {
       const user = await neo4jgraphql(
         object,
-        { email, password, token },
+        { email, password },
         ctx,
         resolveInfo
       );
       if (!user) {
         throw new Error("No user with that email");
+        return null;
       }
 
       const valid = await bcrypt.compare(password, user.password);
       if (!valid) {
         throw new Error("Incorrect password");
+        return null;
       }
 
       const signedToken = jwt.sign(
@@ -36,22 +38,24 @@ export const resolvers = {
         }
       );
 
-      return {
-        username: user.username,
-        id: user.id,
-        password: null, // required on the return type of Login, but we don't want to expose the hashed password
-        token: signedToken
-      };
+      return `${signedToken}`;
     }
   },
   Query: {
     me: (root, params, { user }, resolveInfo) => {
-      if (user) {
-        // they are logged in
-        return neo4jgraphql(object, { user: user.id }, ctx, resolveInfo, true);
-      }
-      // not logged in user
-      return null;
+      return neo4jgraphql(
+        object,
+        { user: "d909abe3-78b4-491f-a946-21edadb2eb91" },
+        ctx,
+        resolveInfo,
+        true
+      );
+      // if (user) {
+      //   // they are logged in
+      //   return neo4jgraphql(object, { user: user.id }, ctx, resolveInfo, true);
+      // }
+      // // not logged in user
+      // return null;
     }
   }
 };

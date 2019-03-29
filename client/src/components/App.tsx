@@ -54,16 +54,20 @@ const checkAuth = () => {
   return false;
 };
 
-const AuthRoute = ({ ...rest }) => (
+const AuthRoute = ({ ...props }) => (
   <Route
-    {...rest}
+    {...props}
     render={() =>
       checkAuth() ? <Home /> : <Redirect to={{ pathname: "/login" }} />
     }
   />
 );
 
-const App = ({ classes }: any) => (
+type Props = {
+  classes: WithStyle<typeof styles>;
+};
+
+const App: React.FC<Props> = ({ classes }) => (
   <ApolloProvider client={client}>
     <div className={classes.appContainer}>
       <BrowserRouter>

@@ -5,15 +5,8 @@ type User {
   username: String!
 }
 
-type LoginInfo {
-  token: String!
-  password: String
-  id: ID!
-  username: String!
-}
-
 type Query {
-  me(user: ID): User @cypher(statement: "MATCH (u:User {id: $user}) RETURN u")
+  me: User @cypher(statement: "MATCH (u:User {id: $user}) RETURN u")
   users: [User!] @cypher(statement: "MATCH (u:User) RETURN u")
   user(id: ID!): User
     @cypher(statement: "MATCH (u:User) WHERE u.id = $id RETURN u")
@@ -24,8 +17,8 @@ type Mutation {
     @cypher(
       statement: "CALL apoc.create.uuids(1) YIELD uuid CREATE (u:User {email: $email, password: $password, username: $username, id: uuid}) RETURN u"
     )
-  Login(email: String!, password: String!, token: String!): LoginInfo
+  Login(email: String!, password: String!): String
     @cypher(
-      statement: "MATCH (u:User {email: $email}) WITH { username: u.username, id: u.id, password: u.password, token: $token} as LoginInfo RETURN LoginInfo"
+      statement: "MATCH (u:User {email: $email}) WITH { username: u.username, id: u.id, password: u.password} as LoginInfo RETURN LoginInfo"
     )
 }

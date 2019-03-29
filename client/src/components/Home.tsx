@@ -46,7 +46,11 @@ const GET_USERS = gql`
   }
 `;
 
-const Home = ({ classes }: any) => {
+type Props = {
+  classes: WithStyle<typeof styles>;
+};
+
+const Home: React.FC<Props> = ({ classes }) => {
   return (
     <>
       <header className={classes.header}>

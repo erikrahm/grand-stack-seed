@@ -12,7 +12,12 @@ const submitLogout = () => {
   window.location.href = "/";
 };
 
-const Logout = ({ classes, containerClass }: any) => (
+type Props = {
+  classes: WithStyle<typeof styles>;
+  containerClass: string;
+};
+
+const Logout: React.FC<Props> = ({ classes, containerClass }) => (
   <div className={containerClass}>
     <button type="button" onClick={submitLogout} className={classes.button}>
       Logout

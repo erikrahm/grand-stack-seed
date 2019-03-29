@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { Formik, Field, ErrorMessage } from "formik";
 import injectSheet from "react-jss";
+import { isNil } from "lodash";
 
 import { LoginValidation } from "./form-validation/login";
 import { FORM_INPUTS } from "./constants/styleConstants";
@@ -34,23 +35,22 @@ const styles = {
 
 const SIGN_IN = gql`
   mutation LoginMutation($email: String!, $password: String!) {
-    Login(email: $email, password: $password, token: "") {
-      id
-      password
-      token
-      username
-    }
+    Login(email: $email, password: $password)
   }
 `;
 
-const Login = ({ classes }: any) => {
+type Props = {
+  classes: WithStyle<typeof styles>;
+};
+
+const Login: React.FC<Props> = ({ classes }) => {
   const [formError, updateFormError] = useState("");
+
   return (
     <Mutation mutation={SIGN_IN}>
       {(Login, { data }) => {
-        if (data && data.Login) {
-          console.log(data);
-          localStorage.setItem("token", data.Login.token);
+        if (data && !isNil(data.Login)) {
+          localStorage.setItem("token", data.Login);
           return <Redirect to={{ pathname: "/" }} />;
         }
 
@@ -60,12 +60,9 @@ const Login = ({ classes }: any) => {
             <Formik
               initialValues={{
                 email: "",
-                username: "",
-                password: "",
-                confirmPassword: ""
+                password: ""
               }}
               onSubmit={({ email, password }) => {
-                console.log(email, password);
                 Login({
                   variables: { email, password }
                 }).catch(err => {
