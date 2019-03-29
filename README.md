@@ -9,6 +9,8 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
  1. Create a `.env.local` file in your `./client` directory with the following env variables:
 
     `GRAPHQL_URI= *example: http://localhost:8000/graphql*`
+    
+    `FB_AUTH_URI= *example: http://localhost:8000/login-facebook*`
  
  
  2. Create `.env` file in your `./server` directory with the following env variables
