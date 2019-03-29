@@ -1,15 +1,29 @@
-type User {
+type UserInfo {
   id: ID!
   email: String!
+  username: String!
+}
+
+type User {
   password: String!
+  id: ID!
+  email: String!
   username: String!
 }
 
 type Query {
-  me: User @cypher(statement: "MATCH (u:User {id: $user}) RETURN u")
-  users: [User!] @cypher(statement: "MATCH (u:User) RETURN u")
+  currentUser: UserInfo
+    @cypher(
+      statement: "MATCH (u:User {id: $user}) WITH { username: u.username, id: u.id, email: u.email} as UserInfo RETURN UserInfo"
+    )
+  users: [UserInfo!]
+    @cypher(
+      statement: "MATCH (u:User) WITH { username: u.username, id: u.id, email: u.email} as UserInfo RETURN UserInfo"
+    )
   user(id: ID!): User
-    @cypher(statement: "MATCH (u:User) WHERE u.id = $id RETURN u")
+    @cypher(
+      statement: "MATCH (u:User) WHERE u.id = $id WITH { username: u.username, id: u.id, email: u.email} as UserInfo RETURN UserInfo"
+    )
 }
 
 type Mutation {

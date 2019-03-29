@@ -18,7 +18,7 @@ const styles = {
     alignItems: "center"
   },
   container: {
-    width: 400,
+    width: 600,
     margin: [0, "auto"],
     color: colors.orange
   },
@@ -37,11 +37,13 @@ const styles = {
 
 const GET_USERS = gql`
   {
+    currentUser {
+      username
+    }
     users {
       id
       username
       email
-      password
     }
   }
 `;
@@ -64,7 +66,10 @@ const Home: React.FC<Props> = ({ classes }) => {
 
           return (
             <main className={classes.container}>
-              <h2 className={classes.heading}>Users:</h2>
+              <h2 className={classes.heading}>
+                Hello {data.currentUser.username}, here's a list of all the
+                current users:
+              </h2>
               <ul>
                 {data.users.map((user: any) => (
                   <li key={user.id}>{user.username}</li>

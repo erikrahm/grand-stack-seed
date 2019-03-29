@@ -1,20 +1,20 @@
 import { neo4jgraphql } from "neo4j-graphql-js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { pick } from "lodash";
+import { pick, isNil } from "lodash";
 
 export const resolvers = {
   Mutation: {
-    RegisterUser: async (object, params, ctx, resolveInfo) => {
+    RegisterUser: async (object, params, context, resolveInfo) => {
       const user = params;
       user.password = await bcrypt.hash(user.password, 12);
-      return neo4jgraphql(object, user, ctx, resolveInfo, true);
+      return neo4jgraphql(object, user, context, resolveInfo, true);
     },
-    Login: async (object, { email, password }, ctx, resolveInfo) => {
+    Login: async (object, { email, password }, context, resolveInfo) => {
       const user = await neo4jgraphql(
         object,
         { email, password },
-        ctx,
+        context,
         resolveInfo
       );
       if (!user) {
@@ -32,7 +32,7 @@ export const resolvers = {
         {
           user: { id: user.id, username: user.username }
         },
-        ctx.SECRET,
+        context.SECRET,
         {
           expiresIn: "1y"
         }
@@ -42,20 +42,24 @@ export const resolvers = {
     }
   },
   Query: {
-    me: (root, params, { user }, resolveInfo) => {
-      return neo4jgraphql(
+    currentUser: async (object, params, context, resolveInfo) => {
+      const userID = context.user.id;
+      if (isNil(userID)) {
+        return null;
+      }
+
+      const { id, email, username } = await neo4jgraphql(
         object,
-        { user: "d909abe3-78b4-491f-a946-21edadb2eb91" },
-        ctx,
-        resolveInfo,
-        true
+        { user: userID },
+        context,
+        resolveInfo
       );
-      // if (user) {
-      //   // they are logged in
-      //   return neo4jgraphql(object, { user: user.id }, ctx, resolveInfo, true);
-      // }
-      // // not logged in user
-      // return null;
+
+      return {
+        id,
+        email,
+        username
+      };
     }
   }
 };
