@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { pick, isNil } from "lodash";
 
+import { createToken } from "./auth/auth";
+
 export const resolvers = {
   Mutation: {
     RegisterUser: async (object, params, context, resolveInfo) => {
@@ -28,14 +30,11 @@ export const resolvers = {
         return null;
       }
 
-      const signedToken = jwt.sign(
+      const signedToken = await createToken(
         {
           user: { id: user.id, username: user.username }
         },
-        context.SECRET,
-        {
-          expiresIn: "1y"
-        }
+        context.SECRET
       );
 
       return `${signedToken}`;
