@@ -72,7 +72,7 @@ const Home: React.FC<Props> = ({ classes }) => {
               </h2>
               <ul>
                 {data.users.map((user: any) => (
-                  <li key={user.id}>{user.username}</li>
+                  <li key={user.username}>{user.username}</li>
                 ))}
               </ul>
             </main>

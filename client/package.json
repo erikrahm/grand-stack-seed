@@ -27,6 +27,7 @@
     "jss-props-sort": "^6.0.0",
     "jss-vendor-prefixer": "^8.0.1",
     "jwt-decode": "^2.2.0",
+    "query-string": "^6.4.2",
     "react": "^16.8.5",
     "react-apollo": "^2.5.2",
     "react-dom": "^16.8.5",

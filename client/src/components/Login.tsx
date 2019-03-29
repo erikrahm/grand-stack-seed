@@ -57,6 +57,7 @@ const Login: React.FC<Props> = ({ classes }) => {
         return (
           <div className={classes.loginContainer}>
             <h1 className={classes.header}>Login</h1>
+            <a href="http://localhost:8000/login-facebook">FACEBOOK</a>
             <Formik
               initialValues={{
                 email: "",
