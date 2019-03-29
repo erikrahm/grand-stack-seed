@@ -48,5 +48,20 @@ export const LABEL = {
 export const FORM_INPUTS = {
   ...FORM_FIELD,
   ...LABEL,
-  ...BUTTON
+  ...BUTTON,
+  facebookLogin: {
+    widht: "100%",
+    borderColor: "#3C5A99",
+    color: "#3C5A99",
+    marginTop: 20,
+
+    "&:hover": {
+      background: "#3C5A99",
+      color: colors.black
+    }
+  },
+  oauthContainer: {
+    padding: [25, 0],
+    color: "#f1f1f1"
+  }
 };

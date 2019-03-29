@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { Formik, Field, ErrorMessage } from "formik";
 import injectSheet from "react-jss";
+import cx from "classnames";
 import { isNil } from "lodash";
 
 import { LoginValidation } from "./form-validation/login";
@@ -24,7 +25,7 @@ const styles = {
     textAlign: "center",
     letterSpacing: 5
   },
-  loginForm: {
+  centeredContainer: {
     display: "flex",
     flex: [1, 0, 0],
     alignItems: "center",
@@ -57,7 +58,6 @@ const Login: React.FC<Props> = ({ classes }) => {
         return (
           <div className={classes.loginContainer}>
             <h1 className={classes.header}>Login</h1>
-            <a href={process.env.FB_AUTH_URI}>FACEBOOK</a>
             <Formik
               initialValues={{
                 email: "",
@@ -76,7 +76,7 @@ const Login: React.FC<Props> = ({ classes }) => {
               {props => (
                 <form
                   onSubmit={props.handleSubmit}
-                  className={classes.loginForm}
+                  className={classes.centeredContainer}
                 >
                   {formError && <div>{formError}</div>}
                   <label className={classes.label}>
@@ -100,11 +100,22 @@ const Login: React.FC<Props> = ({ classes }) => {
                     <ErrorMessage name="password" />
                   </label>
                   <button type="submit" className={classes.button}>
-                    Sign In
+                    Login
                   </button>
                 </form>
               )}
             </Formik>
+            <div
+              className={cx(classes.centeredContainer, classes.oauthContainer)}
+            >
+              <div>- OR - </div>
+              <a
+                href={process.env.FB_AUTH_URI}
+                className={cx(classes.button, classes.facebookLogin)}
+              >
+                <i className="fab fa-facebook-f" /> Login with Facebook
+              </a>
+            </div>
           </div>
         );
       }}

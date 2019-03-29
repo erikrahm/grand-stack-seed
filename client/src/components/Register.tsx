@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import { Formik, Field, ErrorMessage } from "formik";
 import injectSheet from "react-jss";
+import cx from "classnames";
 
 import { FORM_INPUTS } from "./constants/styleConstants";
 import { colors } from "./constants/colors";
@@ -23,7 +24,7 @@ const styles = {
     textAlign: "center",
     letterSpacing: 5
   },
-  loginForm: {
+  centeredContainer: {
     display: "flex",
     flex: [1, 0, 0],
     alignItems: "center",
@@ -59,71 +60,87 @@ const Register: React.FC<Props> = ({ classes }) => {
           }
 
           return (
-            <Formik
-              initialValues={{
-                email: "",
-                username: "",
-                password: "",
-                confirmPassword: ""
-              }}
-              onSubmit={({ email, username, password }) => {
-                RegisterUser({
-                  variables: { email, username, password }
-                });
-              }}
-              validationSchema={RegisterValidation}
-            >
-              {props => (
-                <form
-                  onSubmit={props.handleSubmit}
-                  className={classes.loginForm}
+            <>
+              <Formik
+                initialValues={{
+                  email: "",
+                  username: "",
+                  password: "",
+                  confirmPassword: ""
+                }}
+                onSubmit={({ email, username, password }) => {
+                  RegisterUser({
+                    variables: { email, username, password }
+                  });
+                }}
+                validationSchema={RegisterValidation}
+              >
+                {props => (
+                  <form
+                    onSubmit={props.handleSubmit}
+                    className={classes.centeredContainer}
+                  >
+                    <label className={classes.label}>
+                      <span>Email</span>
+                      <Field
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        className={classes.formField}
+                      />
+                      <ErrorMessage name="email" />
+                    </label>
+                    <label className={classes.label}>
+                      <span>Username</span>
+                      <Field
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        className={classes.formField}
+                      />
+                      <ErrorMessage name="username" />
+                    </label>
+                    <label className={classes.label}>
+                      <span>Password</span>
+                      <Field
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        className={classes.formField}
+                      />
+                      <ErrorMessage name="password" />
+                    </label>
+                    <label className={classes.label}>
+                      <span>Confirm Password</span>
+                      <Field
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                        className={classes.formField}
+                      />
+                      <ErrorMessage name="confirmPassword" />
+                    </label>
+                    <button type="submit" className={classes.button}>
+                      Register
+                    </button>
+                  </form>
+                )}
+              </Formik>
+              <div
+                className={cx(
+                  classes.centeredContainer,
+                  classes.oauthContainer
+                )}
+              >
+                <div>- OR - </div>
+                <a
+                  href={process.env.FB_AUTH_URI}
+                  className={cx(classes.button, classes.facebookLogin)}
                 >
-                  <label className={classes.label}>
-                    <span>Email</span>
-                    <Field
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      className={classes.formField}
-                    />
-                    <ErrorMessage name="email" />
-                  </label>
-                  <label className={classes.label}>
-                    <span>Username</span>
-                    <Field
-                      type="text"
-                      name="username"
-                      placeholder="Username"
-                      className={classes.formField}
-                    />
-                    <ErrorMessage name="username" />
-                  </label>
-                  <label className={classes.label}>
-                    <span>Password</span>
-                    <Field
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      className={classes.formField}
-                    />
-                    <ErrorMessage name="password" />
-                  </label>
-                  <label className={classes.label}>
-                    <span>Confirm Password</span>
-                    <Field
-                      type="password"
-                      name="confirmPassword"
-                      placeholder="Confirm Password"
-                      className={classes.formField}
-                    />
-                    <ErrorMessage name="confirmPassword" />
-                  </label>
-                  <button type="submit" className={classes.button}>
-                    Register
-                  </button>
-                </form>
-              )}
-            </Formik>
+                  <i className="fab fa-facebook-f" /> Register with Facebook
+                </a>
+              </div>
+            </>
           );
         }}
       </Mutation>
