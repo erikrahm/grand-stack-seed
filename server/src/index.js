@@ -50,7 +50,7 @@ passport.use(
       callbackURL: process.env.FB_CALLBACK_URI, // should be the base URI for your server followed `/login-facebook/callback`
       profileFields: ["id", "displayName", "email"]
     },
-    (accessToken, refreshToken, profile, callback) => {
+    async (accessToken, refreshToken, profile, callback) => {
       // Extracting values from facebook response
       const { id, email, name } = profile._json;
 
@@ -65,40 +65,31 @@ passport.use(
       // Creating an instance of our Neo4j Driver to execute cypher commands against the database
       const session = driver.session();
 
-      session
-        .run(
-          "MATCH (u:User)-[:AUTHENTICATED_WITH]->(fb:FB_ACCOUNT) WHERE fb.authID = $authID WITH { username: u.username, id: u.id, email: u.email} as UserInfo RETURN UserInfo",
-          { authID: id }
-        )
-        .then(fetchedUser => {
-          // If a user with this facebook ID exists within the database continue with the Auth pattern
-          if (fetchedUser && fetchedUser.records[0]) {
-            // Pass fetched user to the `/login-facebook/callback` route as part of the request object (it will be on req.user)
-            // null is passed as the first argument as null is the errors argument and we have yet to encounter an error
-            callback(null, fetchedUser.records[0]._fields[0]);
-          } else {
-            // If a user did not exist in the database, create a new one w/ an AUTHENTICATED_WITH relationship to a FB_ACCOUNT
-            session
-              .run(
-                "CALL apoc.create.uuids(1) YIELD uuid CREATE (u:User {id: uuid, email: $email, username: $username})-[:AUTHENTICATED_WITH]->(fb:FB_ACCOUNT {authID: $authID, email: $email}) RETURN u",
-                { email: email, authID: id, username: username }
-              )
-              .then(createdUser => {
-                // Pass newly created user to the `/login-facebook/callback` route as part of the request object (it will be on req.user)
-                // null is passed as the first argument as null is the errors argument and we have yet to encounter an error
-                callback(null, createdUser.records[0]._fields[0].properties);
-              });
-          }
-          // Close the Neo4j Driver instance as part of our Auth cleanup
-          session.close();
-        })
-        .catch(error => {
-          console.log(error);
-          // Pass errors to our `/login-facebook/callback` route for handling
-          callback(error, {});
-          // Close Neo4j Driver after handling errors
-          session.close();
+      try {
+        result = await session.readTransaction(tx => {
+          return tx.run(
+            "MATCH (u:User)-[:AUTHENTICATED_WITH]->(fb:FB_ACCOUNT) WHERE fb.authID = $authID WITH { username: u.username, id: u.id, email: u.email} as UserInfo RETURN UserInfo",
+            { authID: id }
+          );
         });
+        if (result && result.records[0]) {
+          // Pass newly created user to the `/login-facebook/callback` route as part of the request object (it will be on req.user)
+          // null is passed as the first argument as null is the errors argument and we have yet to encounter an error
+          callback(null, result.records[0]._fields[0]);
+        } else {
+          result = await session.writeTransaction(tx => {
+            return tx.run(
+              "CALL apoc.create.uuids(1) YIELD uuid CREATE (u:User {id: uuid, email: $email, username: $username})-[:AUTHENTICATED_WITH]->(fb:FB_ACCOUNT {authID: $authID, email: $email}) RETURN u",
+              { email: email, authID: id, username: username }
+            );
+          });
+          // Pass newly created user to the `/login-facebook/callback` route as part of the request object (it will be on req.user)
+          // null is passed as the first argument as null is the errors argument and we have yet to encounter an error
+          callback(null, result.records[0]._fields[0].properties);
+        }
+      } finally {
+        session.close();
+      }
     }
   )
 );
