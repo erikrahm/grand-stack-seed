@@ -27,9 +27,9 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
 ### Enable Facebook OAuth:
 Facebook OAuth by default is disabled, to allow for user's of this seed project without interest in OAuth to forego it all together. If you would like to enable it all you have to do is create a new app at https://developers.facebook.com and then add the app credentials to the `.env` file in the `./server` directory.
 
-    `FB_ID= * Get this from https://developers.facebook.com*`
+    FB_ID= * Get this from https://developers.facebook.com*
     
-    `FB_SECRET= *Get this from https://developers.facebook.com*`
+    FB_SECRET= *Get this from https://developers.facebook.com*
     
 If you plan to run this project locally (on localhost) then make sure to edit the Facebook App's settings and add `localhost` to the App Domains field and add `http://localhost:8000/` as the Site Url in the Website list at the bottom of the settings.
 
