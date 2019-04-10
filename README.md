@@ -14,7 +14,7 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
     
     `NEO4J_PASSWORD= *example: password*`
 
- 2. Create a JWT encryption key using a service such as https://mkjwk.org/ to be used to encrypt your JWTs (used for email/password based authorization):
+ 2. Create a JWT encryption key using a service such as https://mkjwk.org/ this will be used for encryption in your username/password auth strategy. Once you have the key add it your your `./server`'s `.env` file like so:
 
     `JWT_SECRET= *example: generated secret*`
 
