@@ -26,7 +26,7 @@ const styles = {
 };
 
 const httpLink = new HttpLink({
-  uri: process.env.GRAPHQL_URI || "http://localhost:8000/graphql"
+  uri: process.env.REACT_APP_GRAPHQL_URI || "http://localhost:8000/graphql"
 });
 
 const authMiddleware = new ApolloLink((operation, forward: any) => {

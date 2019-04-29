@@ -105,17 +105,22 @@ const Login: React.FC<Props> = ({ classes }) => {
                 </form>
               )}
             </Formik>
-            <div
-              className={cx(classes.centeredContainer, classes.oauthContainer)}
-            >
-              <div>- OR - </div>
-              <a
-                href={process.env.FB_AUTH_URI}
-                className={cx(classes.button, classes.facebookLogin)}
+            {process.env.REACT_APP_FB_AUTH_URI && (
+              <div
+                className={cx(
+                  classes.centeredContainer,
+                  classes.oauthContainer
+                )}
               >
-                <i className="fab fa-facebook-f" /> Login with Facebook
-              </a>
-            </div>
+                <div>- OR - </div>
+                <a
+                  href={process.env.REACT_APP_FB_AUTH_URI}
+                  className={cx(classes.button, classes.facebookLogin)}
+                >
+                  <i className="fab fa-facebook-f" /> Login with Facebook
+                </a>
+              </div>
+            )}
           </div>
         );
       }}
