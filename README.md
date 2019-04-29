@@ -6,46 +6,34 @@ GRAND (GraphQL, React, Apollo, Neo4j Database) Stack seed project with built in 
 
  
 
- 1. Create a `.env.local` file in your `./client` directory with the following env variables:
+ 1. Create `.env` file in your `./server` directory with the following env variables:
 
-    `GRAPHQL_URI= *example: http://localhost:8000/graphql*`
-    
-    `FB_AUTH_URI= *example: http://localhost:8000/login-facebook*`
- 
- 
- 2. Create `.env` file in your `./server` directory with the following env variables
-
-    `CLIENT_URI= *example: http://localhost:3000 (default for a create react app)*`
-    
     `NEO4J_URI= *example: bolt://localhost:8687*` (this can be a local instance of neo4j or a neo4j sandbox URI)
     
     `NEO4J_USER= *example: neo4j*`
     
     `NEO4J_PASSWORD= *example: password*`
-    
-    `GRAPHQL_LISTEN_PORT= *example: 8000*`
-    
-    `GRAPHQL_URI= *example: http://localhost:8000*` (Graphiql will be available at this URI + `/graphql`)
-    
+
+ 2. Create a JWT encryption key using a service such as https://mkjwk.org/ this will be used for encryption in your username/password auth strategy. Once you have the key add it your your `./server`'s `.env` file like so:
+
     `JWT_SECRET= *example: generated secret*`
-    
-    `FB_ID= * Get this from https://developers.facebook.com*`
-    
-    `FB_SECRET= *Get this from https://developers.facebook.com*`
-    
-    `FB_CALLBACK_URI= *example: http://localhost:8000/login-facebook/callback*`
- 
- 2. Create a `.env.local` file in your `./client` directory with the following env variables:
 
-    `GRAPHQL_URI= *example: http://localhost:8000/graphql*`
-
-2. Install dependencies for both server and client by running `npm (or yarn) run install-all` in the root of the project.
-3. Start up both servers by running `npm start` in the root of the project`
+ 3. Install dependencies in the root and for both the server and client by running `npm (or yarn) install` in the root directory, followed by `npm (or yarn) run install-all` in the root directory.
+ 4. Start up both servers by running `npm start` in the root of the project`
+ 5. Start dev-ing!
 
 ## Project configuration
 
+### Enable Facebook OAuth:
+Facebook OAuth by default is disabled, to allow for user's of this seed project without interest in OAuth to forego it all together. If you would like to enable it all you have to do is create a new app at https://developers.facebook.com and then add the app credentials to the `.env` file in the `./server` directory.
+
+    FB_ID= * Get this from https://developers.facebook.com*
+    
+    FB_SECRET= *Get this from https://developers.facebook.com*
+    
+If you plan to run this project locally (on localhost) then make sure to edit the Facebook App's settings and add `localhost` to the App Domains field and add `http://localhost:8000/` as the Site Url in the Website list at the bottom of the settings.
+
  ### Server configuration:
- 
 
  1. There is a schema.graphql file that contains all of tha app's type definitions and is run through a schema generator that converts Cypher queries (indicated by the `@cypher` or `@relationship` directives) into valid computed properties.
  2. You can turn on automatic mutation generation on `line 44` of the `server/src/index.js` file and mutation on  `line 45` (this will generate queries for all of your defined types, and add/update/delete mutations for all of your types as well) though I personally reccomend writing your own resolvers or computed properties using the directives mentioned above as it will give you more fine grained control over your application.
