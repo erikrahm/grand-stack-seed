@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import injectSheet from "react-jss";
@@ -47,14 +47,9 @@ const GET_USERS = gql`
     }
   }
 `;
-
-type Props = {
-  classes: WithStyle<typeof styles>;
-};
-
-const Home: React.FC<Props> = ({ classes }) => {
+const Home = ({ classes }) => {
   return (
-    <>
+    <Fragment>
       <header className={classes.header}>
         <h1 className={classes.logo}>Grand Stack Starter</h1>
         <Logout containerClass={classes.logoutButton} />
@@ -79,7 +74,7 @@ const Home: React.FC<Props> = ({ classes }) => {
           );
         }}
       </Query>
-    </>
+    </Fragment>
   );
 };
 

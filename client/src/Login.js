@@ -40,11 +40,7 @@ const SIGN_IN = gql`
   }
 `;
 
-type Props = {
-  classes: WithStyle<typeof styles>;
-};
-
-const Login: React.FC<Props> = ({ classes }) => {
+const Login = ({ classes }) => {
   const [formError, updateFormError] = useState("");
 
   return (

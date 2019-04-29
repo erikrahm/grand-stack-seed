@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import gql from "graphql-tag";
 import { Redirect } from "react-router-dom";
 import { Mutation } from "react-apollo";
@@ -45,11 +45,7 @@ const REGISTER = gql`
   }
 `;
 
-type Props = {
-  classes: WithStyle<typeof styles>;
-};
-
-const Register: React.FC<Props> = ({ classes }) => {
+const Register = ({ classes }) => {
   return (
     <div className={classes.loginContainer}>
       <h1 className={classes.header}>Register</h1>
@@ -60,7 +56,7 @@ const Register: React.FC<Props> = ({ classes }) => {
           }
 
           return (
-            <>
+            <Fragment>
               <Formik
                 initialValues={{
                   email: "",
@@ -140,7 +136,7 @@ const Register: React.FC<Props> = ({ classes }) => {
                   <i className="fab fa-facebook-f" /> Register with Facebook
                 </a>
               </div>
-            </>
+            </Fragment>
           );
         }}
       </Mutation>

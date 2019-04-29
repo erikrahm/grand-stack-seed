@@ -69,11 +69,7 @@ const AuthRoute = ({ ...props }) => (
   />
 );
 
-type Props = {
-  classes: WithStyle<typeof styles>;
-};
-
-const App: React.FC<Props> = ({ classes }) => (
+const App = ({ classes }) => (
   <ApolloProvider client={client}>
     <div className={classes.appContainer}>
       <BrowserRouter>
